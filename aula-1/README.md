@@ -1,5 +1,5 @@
 # Aula 1: Comandos do openthread CLI
-Os comandos desta aula são executados no exemplo do [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/samples/openthread/cli/README.html).
+Os comandos desta aula são executados a partir do exemplo do [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/samples/openthread/cli/README.html).
 
 Atenção: adicione o **overlay-tcp.conf** no kconfig fragments para habilitar o uso do TCP.
 
@@ -113,7 +113,7 @@ Caso seu dispositivo seja o **nRF52840 dongle**, adicione também o **overlay-us
 Para modificar outros atributos leia mais em [dataset](https://github.com/openthread/openthread/blob/main/src/cli/README_DATASET.md)
 
 ## Verificando redes Threads existentes
-1. Verificando as redes disponiveis pelo comando discover
+1. Verificando as redes disponiveis pelo comando `discover`
     
     Comando: `discover [channel]`
     
@@ -124,7 +124,7 @@ Para modificar outros atributos leia mais em [dataset](https://github.com/openth
     | 0 | OpenThread       | dead00beef00cafe | ffff | f1d92a82c8d8fe43 | 11 | -20 |   0 |
     Done
     ```
-1. Verificando as redes disponiveis pelo comando scan
+1. Verificando as redes disponiveis pelo comando `scan`
 
     Comando: `scan [channel]`
     
@@ -136,13 +136,13 @@ Para modificar outros atributos leia mais em [dataset](https://github.com/openth
     Done
     ```
 
-## Conectando uma rede Thread existente
+## Conectando a uma rede Thread existente
 
 ### Via commisioning
 Referência [OpenThread CLI - Commissioning](https://github.com/openthread/openthread/blob/main/src/cli/README_COMMISSIONING.md)
 
 #### Iniciando a seção de comisionamento
-No disposito já pertecente a rede Thread, execute os seguintes passos
+No disposito router já pertecente a rede Thread, execute os seguintes passos
 
 1. Iniciando a função de commisioner
     ```bash
@@ -228,6 +228,11 @@ No disposito que irá se conectar a rede Thread, execute os seguintes passos
 ### Via networkkey
 Somente a networkkey é necessária para que um dispositivo se conecte a uma rede Thread.
 
+1. Redefinindo as configurações de fábrica
+    ```bash
+    > ot factoryreset
+    ```
+
 1. Desativando interface Thread
     ```bash
     > ot ifconfig down
@@ -266,6 +271,22 @@ Somente a networkkey é necessária para que um dispositivo se conecte a uma red
     Done
     ```
 
+3. Validando os dados esperados da rede Thread após conexão
+
+    ```bash
+    > ot dataset active
+    Active Timestamp: 1
+    Channel: 18
+    Channel Mask: 0x07fff800
+    Ext PAN ID: 4989529933386222
+    Mesh Local Prefix: fd83:c7ab:e96a:cd01::/64
+    Network Key: 00112233445566778899aabbccddeeff
+    Network Name: openthread-ufes
+    PAN ID: 0xfc1f
+    PSKc: 0ba47acf76641f2d082ee454739506cd
+    Security Policy: 672 onrc
+    Done
+    ```
 
 
 ## Transformando um router em um end device
@@ -293,18 +314,15 @@ Somente a networkkey é necessária para que um dispositivo se conecte a uma red
     Done
     ```
 ## Validando a conexão com Ping
-1. Descubrindo os endereços de um dispositivo na rede para executar o ping
+1. Descubrindo o endereço de um dispositivo na rede mesh para executar o ping
     ```bash
-    > ot ipaddr
-    fd83:c7ab:e96a:cd01:0:ff:fe00:fc00
-    fd83:c7ab:e96a:cd01:0:ff:fe00:2000
+    > ot ipaddr mleid
     fd83:c7ab:e96a:cd01:3fff:97e0:e6f7:b9d6
-    fe80:0:0:0:d8c2:204d:18d8:31dc
     Done
     ```
 2. Executando o ping
     ```bash
-    > ot ping fd83:c7ab:e96a:cd01:0:ff:fe00:fc00
+    > ot ping fd83:c7ab:e96a:cd01:3fff:97e0:e6f7:b9d6
     16 bytes from fd83:c7ab:e96a:cd01:0:ff:fe00:fc00: icmp_seq=1 hlim=64 time=11ms
     1 packets transmitted, 1 packets received. Packet loss = 0.0%. Round-trip min/avg/max = 11/11.0/11 ms.uart
     ```
@@ -376,7 +394,7 @@ Done
     ```
 2. Estabelecendo uma conexão TCP
     
-    comando: `connect <ip> <port> [<fastopen>]`
+    Comando: `connect <ip> <port> [<fastopen>]`
 
     ```bash
     > ot tcp connect fe80:0:0:0:a8df:580a:860:ffa4 30000
@@ -389,11 +407,15 @@ Done
     > ot tcp send hello
     Done
     ```
-    após estabelecer a conexão o comando de `send`  tabmém funcionará para o dispositivo 1
+    após estabelecer a conexão o comando de `send` também funcionará para o dispositivo 1
+
 
 ### Encerrando uma conexão TCP
-    ```bash
-    > ot tcp deinit
-    TCP: Connection reset
-    Done
-    ```
+```bash
+> ot tcp deinit
+TCP: Connection reset
+Done
+```
+
+    
+
