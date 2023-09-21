@@ -55,6 +55,7 @@ Caso seu dispositivo seja o **nRF52840 dongle**, adicione também o **overlay-us
     Done
     ```
 
+<!--
 5. Modificando o canal (opcional)
     1. Analisando os status dos canais
         ```bash
@@ -90,11 +91,12 @@ Caso seu dispositivo seja o **nRF52840 dongle**, adicione também o **overlay-us
         ```
         CONFIG_OPENTHREAD_CHANNEL_MONITOR=y
         ```
-    2. Modificando o número do canal
-        ```bash
-        > ot dataset channel 11
-        Done
-        ```
+    --> 
+2. Modificando o número do canal
+    ```bash
+    > ot dataset channel 11
+    Done
+    ```
 1. Confirmando e salvando as novas configurações em memoria não volátil
 
     ```bash
@@ -205,7 +207,7 @@ No disposito que irá se conectar a rede Thread, execute os seguintes passos
     ```
 1. Iniciando o serviço Thread para conexão
      ```bash
-     > thread start
+     > ot thread start
     Done
      ```
 3. Validando os dados esperados da rede Thread após conexão
@@ -328,6 +330,9 @@ Somente a networkkey é necessária para que um dispositivo se conecte a uma red
     ```
 
 ## Enviando pacotes UDP
+
+[Link para campartilhamento de IPs](https://docs.google.com/document/d/1vyUV47gHinF-xTYLZZwq0btTZh-BhY7RQ0jhlOCcDsQ/edit?usp=sharing) 
+
 ### Dispositivo receptor
 1. Ativando o UDP socket
     ```bash
@@ -369,7 +374,7 @@ Done
 ```
 ## Enviando pacotes TCP
 
-### Dispositivo 1
+### Dispositivo 1 - Server
 1. Habilitando o TCP
     ```bash
     > ot tcp init
@@ -385,7 +390,7 @@ Done
     ```
     O simbolo `::` determina que o endereço IPv6 não é especificado, ou seja, aceita-se pacote de qualquer IPv6.
 
-### Dispositivo 2
+### Dispositivo 2 - Client
 
 1. Habilitando o TCP
     ```bash
