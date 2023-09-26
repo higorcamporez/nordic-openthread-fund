@@ -1,5 +1,4 @@
-## Aula 2: Comunicação externa e UDP APIs
-
+## Aula 2 - Exercício 1: Comunicação externa usando Border Router
 ## Conectando a rede Thread do border router
 1. Redefinindo as configurações de fábrica
     ```bash
