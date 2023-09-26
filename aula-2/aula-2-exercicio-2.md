@@ -1,10 +1,10 @@
 # Aula 2 - Exercício 2: Comunicação externa usando UDP API e Border Router
 Use o projeto o [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/samples/openthread/cli/README.html) como base para esse exercicio
 
-# Confgurando o projeto para se conectar automaticamente a rede Thread do border router
+## Confgurando o projeto para se conectar automaticamente a rede Thread do border router
 1. Adicione, ou altere caso exita, os seguinte atributos ao `prj.conf`
     ```conf
-    CONFIG_PENTHREAD_MANUAL_START=n
+    CONFIG_OPENTHREAD_MANUAL_START=n
     CONFIG_OPENTHREAD_NETWORK_NAME="OpenThreadUfes"
     #4660 (decimal base) is equal to 0x1234 (hexadecimal base)
     CONFIG_OPENTHREAD_PANID=4660
@@ -30,15 +30,15 @@ Use o projeto o [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Con
     Done
     ```
 
-# Enviando pacotes UDP via API
+## Enviando pacotes UDP via API
 O objetivo desta está do exercio é enviar uma mensagem UDP ao aperta o botão da placa nordic
 
 Referência [Openthread UDP API](https://openthread.io/reference/group/api-udp?hl=en)
 
-## Configurando o botão como interrupção
+### Configurando o botão como interrupção
 Siga a passo a passo do Aula 2 - exercicio 2 do [nRF Connect SDK Fundamentals](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/exercise-2-3/)
 
-## Configurando a API UDP 
+### Configurando a API UDP 
 1. Adicione os seguintes includes no arquivo `main.c` do seu projeto
     ```C
     #include <zephyr/net/openthread.h>
@@ -118,7 +118,7 @@ Siga a passo a passo do Aula 2 - exercicio 2 do [nRF Connect SDK Fundamentals](h
 Obs: use o smartphone para receber a mensagem UDP como no exercicio 1, ou baixe o [UDP Test Tool 3.0](https://udp-test-tool.informer.com/) para Windowns, ou siga esse tutorial em Python
 [IPv6 UDP Sockets with Python 3](https://strangfeld.io/posts/ipv6-udp-sockets-python/)
 
-# Recebendo pacotes UDP via API
+## Recebendo pacotes UDP via API
 1. Adicione a seguinte função de UDP callback ao arquivo `main.c` do seu projeto
     ```C
     //UDP callback function
@@ -193,12 +193,12 @@ Obs: use o smartphone para receber a mensagem UDP como no exercicio 1, ou baixe 
 Obs: use o smartphon para enviar a mensagem UDP como no exercicio 1, ou siga esse tutorial em Python
 [IPv6 UDP Sockets with Python 3](https://strangfeld.io/posts/ipv6-udp-sockets-python/)
 
-# Controlando um LED via pacotes UDP
+## Controlando um LED via pacotes UDP
 
-## Configurando o LED
+### Configurando o LED
 Siga a passo a passo do Aula 2 - exercicio 1 do [nRF Connect SDK Fundamentals](https://academy.nordicsemi.com/courses/nrf-connect-sdk-fundamentals/lessons/lesson-2-reading-buttons-and-controlling-leds/topic/exercise-1-2/)
 
-## Protocolo simplificado
+### Protocolo simplificado
 
 1. Protocolo para Ligar e desligar o LED
 
@@ -219,9 +219,9 @@ Siga a passo a passo do Aula 2 - exercicio 1 do [nRF Connect SDK Fundamentals](h
 		gpio_pin_set_dt(&led, 0);
 	}
     ```
-## DESAFIO I: Vamos criar um protocolo mais elaborado?
+### DESAFIO I: Vamos criar um protocolo mais elaborado?
 
-### Vamos controlar as cores do LED RGB separadamente
+#### Vamos controlar as cores do LED RGB separadamente
 
 1. Protocolo:
 
@@ -260,7 +260,7 @@ Siga a passo a passo do Aula 2 - exercicio 1 do [nRF Connect SDK Fundamentals](h
         ```      
 
 
-### Vamos controlar todas as cores do LED RGB em uma unica requisição
+#### Vamos controlar todas as cores do LED RGB em uma unica requisição
 
 1. Protocolo:
     
@@ -286,9 +286,9 @@ Siga a passo a passo do Aula 2 - exercicio 1 do [nRF Connect SDK Fundamentals](h
             payload do pacote UDP será "0,0,1"
         ```      
 
-## DESAFIO II: Vamos criar um protocolo mais elaborado ainda?
+### DESAFIO II: Vamos criar um protocolo mais elaborado ainda?
 
-### Vamos controlar as cores do LED RGB separadamente
+#### Vamos controlar as cores do LED RGB separadamente
 
 1. Protocolo:
 
@@ -319,7 +319,7 @@ Siga a passo a passo do Aula 2 - exercicio 1 do [nRF Connect SDK Fundamentals](h
             payload do pacote UDP será "1,255"
         ```  
 
-### Vamos controlar todas as cores do LED RGB em uma unica requisição
+#### Vamos controlar todas as cores do LED RGB em uma unica requisição
 
 1. Protocolo:
     
