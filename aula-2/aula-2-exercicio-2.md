@@ -115,8 +115,8 @@ Siga a passo a passo do Aula 2 - exercicio 2 do [nRF Connect SDK Fundamentals](h
         udp_send();
     }
     ``` 
-Obs: use o smartphone para receber a mensagem UDP como no exercicio 1, ou baixe o [UDP Test Tool 3.0](https://udp-test-tool.informer.com/) para Windowns, ou siga esse tutorial em python
-[Python UDP IPv6 client & server](https://gist.github.com/tuxmartin/e64d2132061ffef7e031)
+Obs: use o smartphone para receber a mensagem UDP como no exercicio 1, ou baixe o [UDP Test Tool 3.0](https://udp-test-tool.informer.com/) para Windowns, ou siga esse tutorial em Python
+[IPv6 UDP Sockets with Python 3](https://strangfeld.io/posts/ipv6-udp-sockets-python/)
 
 # Recebendo pacotes UDP via API
 1. Adicione a seguinte função de UDP callback ao arquivo `main.c` do seu projeto
@@ -190,8 +190,8 @@ Obs: use o smartphone para receber a mensagem UDP como no exercicio 1, ou baixe 
     }
     ```
 
-Obs: use o smartphon para enviar a mensagem UDP como no exercicio 1, ou siga esse tutorial em python
-[Python UDP IPv6 client & server](https://gist.github.com/tuxmartin/e64d2132061ffef7e031)
+Obs: use o smartphon para enviar a mensagem UDP como no exercicio 1, ou siga esse tutorial em Python
+[IPv6 UDP Sockets with Python 3](https://strangfeld.io/posts/ipv6-udp-sockets-python/)
 
 # Controlando um LED via pacotes UDP
 
