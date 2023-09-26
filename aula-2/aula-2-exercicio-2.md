@@ -1,4 +1,4 @@
-# Aula 2 - Exercício 2: Comunicação externa usando Border Router
+# Aula 2 - Exercício 2: Comunicação externa usando UDP API e Border Router
 Use o projeto o [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/samples/openthread/cli/README.html) como base para esse exercicio
 
 # Confgurando o projeto para se conectar automaticamente a rede Thread do border router
@@ -115,7 +115,8 @@ Siga a passo a passo do Aula 2 - exercicio 2 do [nRF Connect SDK Fundamentals](h
         udp_send();
     }
     ``` 
-Obs: use o smartphone ou computador para receber a mensagem UDP como no exercicio 1
+Obs: use o smartphone para receber a mensagem UDP como no exercicio 1, ou baixe o [UDP Test Tool 3.0](https://udp-test-tool.informer.com/) para Windowns, ou siga esse tutorial em Python
+[IPv6 UDP Sockets with Python 3](https://strangfeld.io/posts/ipv6-udp-sockets-python/)
 
 # Recebendo pacotes UDP via API
 1. Adicione a seguinte função de UDP callback ao arquivo `main.c` do seu projeto
@@ -188,6 +189,9 @@ Obs: use o smartphone ou computador para receber a mensagem UDP como no exercici
         udp_init();
     }
     ```
+
+Obs: use o smartphon para enviar a mensagem UDP como no exercicio 1, ou siga esse tutorial em Python
+[IPv6 UDP Sockets with Python 3](https://strangfeld.io/posts/ipv6-udp-sockets-python/)
 
 # Controlando um LED via pacotes UDP
 
