@@ -1,4 +1,4 @@
-# Aula 2 - Exercício 2: Comunicação externa usando Border Router
+# Aula 2 - Exercício 2: Comunicação externa usando UDP API e Border Router
 Use o projeto o [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/samples/openthread/cli/README.html) como base para esse exercicio
 
 # Confgurando o projeto para se conectar automaticamente a rede Thread do border router
