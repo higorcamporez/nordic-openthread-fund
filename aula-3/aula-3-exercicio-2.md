@@ -1,37 +1,11 @@
 # Aula 3 - Exercício 2: Comunicação externa usando CoAP API e Border Router
 
-Use o projeto o [Nordic openthread CLI](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/samples/openthread/cli/README.html) como base para esse exercicio
+## Baixe e abra o seguinte projeto base no VS code para este exemplo
+[coap-server-example](/aula-3/coap-server-example/)
 
-## Confgurando o projeto para se conectar automaticamente a rede Thread do border router
-1. Adicione, ou altere caso exita, os seguinte atributos ao `prj.conf`
-    ```conf
-    CONFIG_OPENTHREAD_MANUAL_START=n
-    CONFIG_OPENTHREAD_NETWORK_NAME="OpenThreadUfes"
-    #4660 (decimal base) is equal to 0x1234 (hexadecimal base)
-    CONFIG_OPENTHREAD_PANID=4660
-    CONFIG_OPENTHREAD_XPANID="11:11:11:11:22:22:22:22"
-    CONFIG_OPENTHREAD_NETWORKKEY="00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff"
-    CONFIG_OPENTHREAD_CHANNEL=15
-    ```
+1. Na etapa de build adicione o `usb_nrf52840dongle_nrf52840.conf` e `usb_nrf52840dongle_nrf52840.overlay`
 
-3. Validando os dados esperados da rede Thread após conexão
-
-    ```bash
-    > ot dataset active
-    Active Timestamp: 1
-    Channel: 11
-    Channel Mask: 0x07fff800
-    Ext PAN ID: 39758ec8144b07fb
-    Mesh Local Prefix: fdf1:f1ad:d079:7dc0::/64
-    Network Key: 00112233445566778899aabbccddeeff
-    Network Name: OpenThreadUfes
-    PAN ID: 0x1234
-    PSKc: 3ca67c969efb0d0c74a4d8ee923b576c
-    Security Policy: 672 onrc 0
-    Done
-    ```
-
-## Criando um CoAP Server
+# Criando um CoAP Server
 O objetivo do exercio é criar um CoAP Server com os recursos de controlar e consultar estados dos LEDs
 
 Referência [Openthread CoAP API](https://openthread.io/reference/group/api-coap?hl=pt-br)
@@ -39,12 +13,13 @@ Referência [Openthread CoAP API](https://openthread.io/reference/group/api-coap
 ## Configurando a API CoAP Server para receber requisições PUT 
 Está etapa tem por objetivo controlar o LED 1, ligar e desligar, através de requisições CoAP PUT, sendo o payload '0' ou '1' para desligar e ligar o LED, respectivamente. **Posto isso, todo processo de configuração do LED deve ser feita como no exercício 2 da aula 2.**
 
-1. Adicione as seguintes configurações no `prj.conf` para habilitar logs e o CoAP API
+1. Adicione as seguintes configurações no `prj.conf` para habilitar o CoAP API
     ```conf
-    CONFIG_OPENTHREAD_DEBUG=y
-    CONFIG_OPENTHREAD_L2_DEBUG=y
-    CONFIG_OPENTHREAD_L2_LOG_LEVEL_INF=y
     CONFIG_OPENTHREAD_COAP=y
+    ```
+1. Adicione o include do CoAP API
+    ```C
+    #include <openthread/coap.h>
     ```
 1. Adicione as seguinte variáveis **global** e declarações de função ao arquivo `main.c`
     ```C
@@ -152,8 +127,9 @@ Está etapa tem por objetivo controlar o LED 1, ligar e desligar, através de re
             myTextLength = otMessageRead(pMessage, otMessageGetOffset(pMessage), myText, BUFFER_SIZE - 1);
 
             myText[myTextLength] = '\0';
-            printk("PUT payload: %s\n", myText);
             
+            printk("Processing PUT request path=\"led\" and payload=|%s|\n", myText);
+
             //checking for LED commands
             if(strcmp(myText, "1") == 0){
                 // Turning on the LED
@@ -225,31 +201,44 @@ Está etapa tem por objetivo controlar o LED 1, ligar e desligar, através de re
  
     [CoAP Client](https://play.google.com/store/apps/details?id=com.funworks.CoApp&hl=en&gl=US)
  
- 1. Configure um novo entry point adicionando no Host o IPv6 da sua placa thread
+ 1. Configure um novo entry point, adicionando no Host o IPv6 da sua placa thread (SLAAC). Para descobrir o IPv6 da placa Thread, basta precionar o botão para que a placa envie as informações ao terminal.
     ```bash
-    > ot ipaddr -v
-    fdfd:d7e3:ff4c:1:5c05:545b:71db:9403 origin:slaac
-    fd8d:1d8a:2936:e08c:0:ff:fe00:fc00 origin:thread
-    fd8d:1d8a:2936:e08c:0:ff:fe00:3c00 origin:thread
-    fd8d:1d8a:2936:e08c:ac2:8d47:a30b:1068 origin:thread
-    fe80:0:0:0:e898:9dca:1b0d:6109 origin:thread
-    Done
+    [00:13:53.275,329] <inf> print_ips: (1) IPv6 Address origin = OT_ADDRESS_ORIGIN_SLAAC, valid = 1: fdfd:d7e3:ff4c:0001:5aa9:6b03:8099:b4ed
+
+    [00:13:53.275,543] <inf> print_ips: (2) IPv6 Address origin = OT_ADDRESS_ORIGIN_THREAD, valid = 1: fd8d:1d8a:2936:e08c:0000:00ff:fe00:0400
+
+    [00:13:53.275,726] <inf> print_ips: (3) IPv6 Address origin = OT_ADDRESS_ORIGIN_THREAD, valid = 1: fd8d:1d8a:2936:e08c:60a0:4262:9bfa:fdeb
+
+    [00:13:53.275,939] <inf> print_ips: (4) IPv6 Address origin = OT_ADDRESS_ORIGIN_THREAD, valid = 1: fe80:0000:0000:0000:c090:aa19:016f:f112
     ```
+    <p align="center">
+        <img src="img/entry.jpeg" width="200" title="hover text">
+    <p>
+
  1. Selecione o entry point criado e adicione uma nova CoAP request com os seguintes parametros
     ```
     Name = PUT led
     Method = PUT
     Path = led
     query = deixe vazio
-    payload = 1
+    payload = 0
     ```
+    <p align="center">
+        <img src="img/put-request.jpeg" width="200" title="hover text">
+    <p>
 1. Selecione a request salva e envie no payload 1 para ligar o led e 0 para desligar
 
-    note que o retorno deve ser 2.04 Changed assim como parametrizado no código
+    note que o retorno deve ser **2.04 Changed** assim como parametrizado no código
+    <p align="center">
+        <img src="img/204-put-response.jpeg" width="200" title="hover text">
+    <p>
 
 1. Agora envie no payload o valor 5
 
-    note que o retorno deve ser 4.00 Bad Request, pois o payload não veio como esperado 
+    note que o retorno deve ser **4.00 Bad Request**, pois o payload não veio como esperado 
+    <p align="center">
+        <img src="img/400-put-response.jpeg" width="200" title="hover text">
+    <p>
 
 ### Via Python 
 [CoAP Lib](https://aiocoap.readthedocs.io/en/latest/)
@@ -278,7 +267,92 @@ Está etapa tem por objetivo ler o estado do LED 1 através de requisições CoA
 	}
     ...
     ```
+## Configurando a CoAP Client para enviar requisições GET
 
+ 1. Selecione o entry point criado no passo anterior e adicione uma nova CoAP request com os seguintes parametros
+    ```
+    Name = GET led
+    Method = GET
+    Path = led
+    query = deixe vazio
+    ```
+    <p align="center">
+        <img src="img/get-request.jpeg" width="200" title="hover text">
+    <p>
+
+1. Envie uma requisição GET para receber o estado do LED
+    <p align="center">
+        <img src="img/get-response.jpeg" width="200" title="hover text">
+    <p>
+
+## Desafio: Recebendo Payload no formato Json para controlar o LED
+Referência [how-to-parse-json-data-in-zephyr](https://blog.golioth.io/how-to-parse-json-data-in-zephyr/)
+1. Adicione a configuração para habilitar a biblioteca do Json ao `prj.conf`
+    ```conf
+    CONFIG_JSON_LIBRARY=y
+    ```
+
+1. Adicione a biblioteca para trabalhar com Json
+    ```C
+    #include <zephyr/data/json.h>
+    ```
+
+1. Adicione a seguinte struct global que representa o formato do payload Json
+    ```C
+    //led state struct expected in PUT payload
+    struct ledState {
+    int state;
+    };
+    ```
+1. Adicione a seguinte struct global do Json descritor para converter o payload de string para a struct `ledState`
+    ```C
+    //json descritor definition to do parsing
+    static const struct json_obj_descr ledStateDescr[] = {
+    JSON_OBJ_DESCR_PRIM(struct ledState, state, JSON_TOK_NUMBER),
+    };
+    ```
+
+1. Modifique a função de callback do recurso led `ledRequestCb(...)` para que converta o payload de string para a Struct da resposta
+    ```C
+    // reading the payload message
+    myTextLength = otMessageRead(pMessage, otMessageGetOffset(pMessage), myText, BUFFER_SIZE - 1);
+
+    myText[myTextLength] = '\0';
+    printk("Processing PUT request path=\"led\" and payload=|%s|\n", myText);
+    
+    // request payload structure
+    struct ledState ledSt;
+
+    // parsing string paylod to ledState structure
+    int ret = json_obj_parse(myText, myTextLength,
+                    ledStateDescr,
+                    ARRAY_SIZE(ledStateDescr),
+                    &ledSt);
+    if (ret < 0)
+    {
+        sendResponse(pMessage, pMessageInfo, OT_COAP_CODE_BAD_REQUEST, NULL);	
+        LOG_ERR("JSON Parse Error: %d", ret);
+        return;
+    }else{
+        printk("stet = %d\n", ledSt.state);
+        if(ledSt.state == 1){
+            // Turning on the LED
+            printk("Turning on the LED\n");
+            gpio_pin_set_dt(&led, 1);
+            ledState = 1;
+        }else if(ledSt.state == 0){
+            // Turning off the LED
+            printk("Turning off the LED\n");
+            gpio_pin_set_dt(&led, 0);
+            ledState = 0;
+        }else{
+            printk("LED state should be 1 or 0\n");
+            sendResponse(pMessage, pMessageInfo, OT_COAP_CODE_BAD_REQUEST, NULL);
+            return;
+        }
+    }
+    ```
+2. Agora é com você!
 ## Desafio: Controle o LED RGB
 1. Adicione os três recursos ao CoAP serve, onde cada um controla uma cor do LED RGB
 
@@ -308,4 +382,3 @@ Está etapa tem por objetivo ler o estado do LED 1 através de requisições CoA
     };
     ```
 2. Agora é com você!
-1. Caso queria receber um payload no formato Json, siga esse tutorial https://blog.golioth.io/how-to-parse-json-data-in-zephyr/
