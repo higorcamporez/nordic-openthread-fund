@@ -199,7 +199,7 @@ Está etapa tem por objetivo controlar o LED 1, ligar e desligar, através de re
 ### Via Android
  1. Baixe o seguinte APP
  
-    [CoAP Client](https://play.google.com/store/apps/details?id=com.funworks.CoApp&hl=en&gl=US)
+    [CoAP Client](https://play.google.com/store/apps/details?id=fr.dodecanom.coap_client&hl=en&gl=US)
  
  1. Configure um novo entry point, adicionando no Host o IPv6 da sua placa thread (SLAAC). Para descobrir o IPv6 da placa Thread, basta precionar o botão para que a placa envie as informações ao terminal.
     ```bash
