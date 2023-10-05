@@ -342,4 +342,4 @@ O objetivo do exercio é se conectar a um MQTT broker e publicar uma temperatura
         <img src="img/publisher_win.png" width="400" title="hover text">
     <p>
 
-## Desafio: Faça um código que permitar o controle o LED RGB
+## Desafio: Faça um código que permitar o controle do LED RGB
