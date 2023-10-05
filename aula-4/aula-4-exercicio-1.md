@@ -146,8 +146,13 @@ O objetivo do exercio é se conectar a um MQTT broker e publicar uma temperatura
         snprintk(payload, sizeof(payload), "{\"temperature\":%d}",
             (uint8_t)sys_rand32_get()%50);
 
-        // publishing a temperature sample to a topic MQTT_PUBLISH_TOPIC with QoS zero.
-        return publish(&client_ctx, MQTT_PUBLISH_TOPIC, payload, MQTT_QOS_0_AT_MOST_ONCE);
+        if(connected){
+            // publishing a temperature sample to a topic MQTT_PUBLISH_TOPIC with QoS zero.
+            return publish(&client_ctx, MQTT_PUBLISH_TOPIC, payload, MQTT_QOS_0_AT_MOST_ONCE);
+        } else{
+            LOG_INF("publish_temperature the device is not connected");
+            return -1;
+        }
     }
     ```
 
