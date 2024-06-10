@@ -1,3 +1,0 @@
-osource "e:/projects/estagio/openthread-fund/cli_puro/boards/shields/*/Kconfig.defconfig"
-osource "e:/projects/estagio/openthread-fund/cli-coap/boards/shields/*/Kconfig.defconfig"
-osource "E:/Programas/ncs/v2.3.0/nrf/boards/shields/*/Kconfig.defconfig"
