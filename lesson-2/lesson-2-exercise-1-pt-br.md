@@ -66,7 +66,7 @@
     Done
     ```
 
-    note o IP do google é v4 e foi convertido para v6
+    note que o IP do google é v4 e foi convertido para v6
 
 ## Recebendo pacotes UDP da rede externa
 
