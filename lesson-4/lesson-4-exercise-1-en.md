@@ -2,7 +2,7 @@
 
 ## Download following project and open it using the VS code
 
-[mqtt-aula-4-example](/aula-4/mqtt-aula-4-example/)
+[mqtt-aula-4-example](/lesson-4/mqtt-aula-4-example/)
 
 1. Add `usb_nrf52840dongle_nrf52840.conf` and `usb_nrf52840dongle_nrf52840.overlay` to the build step
 
