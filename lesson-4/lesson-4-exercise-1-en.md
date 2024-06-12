@@ -2,9 +2,7 @@
 
 ## Download following project and open it using the VS code
 
-[mqtt-aula-4-example](/lesson-4/mqtt-aula-4-example/)
-
-1. Add `usb_nrf52840dongle_nrf52840.conf` and `usb_nrf52840dongle_nrf52840.overlay` to the build step
+[thread-mqtt-example](/lesson-4/thread-mqtt-example/)
 
 # Connecting to an MQTT broker and publishing a message to a topic
 The objective of the exercise is to connect to an MQTT broker and publish a temperature to a topic by pressing the button on the board
@@ -29,7 +27,7 @@ The objective of the exercise is to connect to an MQTT broker and publish a temp
     ```c
     // MQTT defines
     #define MQTT_CLIENT_ID	"mqtt_client_01"
-    #define SERVER_ADDR		"fd01::10d8:4a14:a5ab:e05c"
+    #define SERVER_ADDR		"fd23:fd03:a39d:2:0:0:c0a8:6c"
     #define SERVER_PORT		1883
     #define APP_CONNECT_TIMEOUT_MS	2000
     #define APP_SLEEP_MSECS		500
